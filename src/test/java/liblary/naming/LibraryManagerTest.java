@@ -171,9 +171,9 @@ class LibraryManagerTest {
     @Test
     @Disabled
     void shouldNotReturnBookNotBorrowedByReader() {
-        Book book1 = new Book( ISBN.of("1234")
-                , "Juliusz Słowacki"
-                , "Balladyna");
+        Book book1 = new Book( ISBN.of("4321")
+                , "Aleksander Kamiński"
+                , "Kamienie na szaniec");
         Book book2 = new Book( ISBN.of("1234")
                 , "Juliusz Słowacki"
                 , "Balladyna");
