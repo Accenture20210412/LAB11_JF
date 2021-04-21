@@ -48,4 +48,14 @@ class LibraryManagerTest {
         assertEquals(BorrowOutcome.NOT_IN_CATALOGUE, borrowOutcome);
     }
 
+    @Test
+    void shouldNotBorrowBookReaderNotEnrolled() {
+        Book book = new Book( ISBN.of("1234")
+                , "Juliusz Słowacki"
+                , "Balladyna");
+        Reader reader = new Reader("Jakub");
+
+        BorrowOutcome borrowOutcome = libraryManager.provideBook(book, reader);
+        assertEquals(BorrowOutcome.READER_NOT_ENROLLED, borrowOutcome);
+    }
 }
