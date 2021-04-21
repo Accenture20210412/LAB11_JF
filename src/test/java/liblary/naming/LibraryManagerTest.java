@@ -3,6 +3,7 @@ package liblary.naming;
 
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -165,5 +166,51 @@ class LibraryManagerTest {
 
         ReturnOutcome returnOutcome = libraryManager.returns(book, reader);
         assertEquals(ReturnOutcome.readerNotEnrolled, returnOutcome);
+    }
+
+    @Test
+    @Disabled
+    void shouldNotReturnBookNotBorrowedByReader() {
+        Book book1 = new Book( ISBN.of("1234")
+                , "Juliusz Słowacki"
+                , "Balladyna");
+        Book book2 = new Book( ISBN.of("1234")
+                , "Juliusz Słowacki"
+                , "Balladyna");
+        Reader reader1 = new Reader("Jakub");
+        Reader reader2 = new Reader("Krzysztof");
+
+        libraryManager.putBook(book1);
+        libraryManager.putBook(book2);
+        libraryManager.newReader(reader1);
+        libraryManager.newReader(reader2);
+
+        libraryManager.provideBook(book1, reader1);
+        libraryManager.provideBook(book2, reader2);
+
+        ReturnOutcome returnOutcome = libraryManager.returns(book1, reader2);
+        assertEquals(ReturnOutcome.bookNotBorrowedByReader, returnOutcome);
+    }
+
+    @Test
+    void shouldBorrowTwoDifrentBooks() {
+        Book book1 = new Book( ISBN.of("1234")
+                , "Aleksander Kamiński"
+                , "Kamienie na szaniec");
+        Book book2 = new Book( ISBN.of("4321")
+                , "Juliusz Słowacki"
+                , "Balladyna");
+        Reader reader = new Reader("Jakub");
+
+        libraryManager.putBook(book1);
+        libraryManager.putBook(book2);
+        libraryManager.newReader(reader);
+
+        BorrowOutcome outcome1 = libraryManager.provideBook(book1, reader);
+        BorrowOutcome outcome2 = libraryManager.provideBook(book2, reader);
+
+        assertTrue(() ->
+                BorrowOutcome.SUCCESS.equals(outcome1) &&
+                BorrowOutcome.SUCCESS.equals(outcome2));
     }
 }
