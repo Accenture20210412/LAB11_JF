@@ -104,4 +104,26 @@ class LibraryManagerTest {
 
         assertEquals(4, libraryManager.getBookAmounts(book));
     }
+
+    @Test
+    void shouldBorrowBookMoreCopiesInCatalogue() {
+        Book book = new Book( ISBN.of("1234")
+                , "Juliusz Słowacki"
+                , "Balladyna");
+        libraryManager.putBook(book);
+        libraryManager.putBook(book);
+        libraryManager.putBook(book);
+        libraryManager.putBook(book);
+
+        Reader reader = new Reader("Jakub");
+        libraryManager.newReader(reader);
+
+        System.out.println(libraryManager.getBookAmounts(book));
+        BorrowOutcome borrowOutcome = libraryManager.provideBook(book, reader);
+        System.out.println(libraryManager.getBookAmounts(book));
+
+        assertTrue(() ->
+                libraryManager.getBookAmounts(book) == 3 &&
+                borrowOutcome == BorrowOutcome.SUCCESS);
+    }
 }
