@@ -17,7 +17,7 @@ class BorrowManager {
     }
 
     BorrowOutcome borrowBook(Book book, Reader reader) {
-        if (isRegister(reader)) {
+        if (isNotRegistered(reader)) {
             return READER_NOT_ENROLLED;
         } else if (!isAvailableInCatalogue(book)) {
             return NOT_IN_CATALOGUE;
@@ -32,13 +32,13 @@ class BorrowManager {
 
 
     ReturnOutcome returnBook(Book book, Reader reader) {
-        if (isRegister(reader)) {
+        if (isNotRegistered(reader)) {
             return ReturnOutcome.readerNotEnrolled;
         }else
         if (!isAvailableInCatalogue(book)) {
             return ReturnOutcome.notInCatalogue;
         }else
-        if (isAlreadyBorrowed(book, reader)) {
+        if (!isAlreadyBorrowed(book, reader)) {
             return ReturnOutcome.bookNotBorrowedByReader;
         }else {
             return giveBack(book, reader);
@@ -70,7 +70,7 @@ class BorrowManager {
         return libraryResources.contains(book);
     }
 
-    private boolean isRegister(Reader reader) {
+    private boolean isNotRegistered(Reader reader) {
         return !readersManager.contains(reader);
     }
 }

@@ -139,4 +139,19 @@ class LibraryManagerTest {
         BorrowOutcome borrowOutcome = libraryManager.provideBook(book, reader);
         assertEquals(BorrowOutcome.BOOK_ALREADY_BORROWED_BY_READER, borrowOutcome);
     }
+
+    @Test
+    void shouldReturnBook() {
+        Book book = new Book( ISBN.of("1234")
+                , "Juliusz Słowacki"
+                , "Balladyna");
+        libraryManager.putBook(book);
+
+        Reader reader = new Reader("Jakub");
+        libraryManager.newReader(reader);
+        libraryManager.provideBook(book, reader);
+
+        ReturnOutcome returnOutcome = libraryManager.returns(book, reader);
+        assertEquals(ReturnOutcome.success, returnOutcome);
+    }
 }

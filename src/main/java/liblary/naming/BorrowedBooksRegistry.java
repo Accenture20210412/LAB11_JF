@@ -23,7 +23,7 @@ public void borrow(Book book, Reader reader) {
             books.add(book.getIsbn());
             rentals.put(reader, books);
         }
-    }
+}
 @Override
 public boolean readerHasNoBookCopy(Book book, Reader reader) {
         return !readerHasBookCopy(book, reader);
