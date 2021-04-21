@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class LibraryManagerTest {
@@ -25,5 +27,11 @@ class LibraryManagerTest {
         assertEquals(1, libraryManager.getBookAmounts(book));
     }
 
-    void sho
+    @Test
+    void shouldRegisterReader() {
+        Reader reader = new Reader("Jakub");
+        libraryManager.newReader(reader);
+        List<Reader> readerList = libraryManager.loadReaders();
+        assertEquals(List.of(reader), readerList);
+    }
 }
