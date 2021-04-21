@@ -53,9 +53,24 @@ class LibraryManagerTest {
         Book book = new Book( ISBN.of("1234")
                 , "Juliusz Słowacki"
                 , "Balladyna");
+        libraryManager.putBook(book);
         Reader reader = new Reader("Jakub");
 
         BorrowOutcome borrowOutcome = libraryManager.provideBook(book, reader);
         assertEquals(BorrowOutcome.READER_NOT_ENROLLED, borrowOutcome);
+    }
+
+    @Test
+    void shouldBorrowBook() {
+        Book book = new Book( ISBN.of("1234")
+                , "Juliusz Słowacki"
+                , "Balladyna");
+        libraryManager.putBook(book);
+
+        Reader reader = new Reader("Jakub");
+        libraryManager.newReader(reader);
+
+        BorrowOutcome borrowOutcome = libraryManager.provideBook(book, reader);
+        assertEquals(BorrowOutcome.SUCCESS, borrowOutcome);
     }
 }
