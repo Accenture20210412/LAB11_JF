@@ -19,7 +19,7 @@ class BorrowManager {
     BorrowOutcome borrowBook(Book book, Reader reader) {
         if (isRegister(reader)) {
             return READER_NOT_ENROLLED;
-        } else if (isAvailableInCatalogue(book)) {
+        } else if (!isAvailableInCatalogue(book)) {
             return NOT_IN_CATALOGUE;
         } else if (isAlreadyBorrowed(book, reader)) {
             return BOOK_ALREADY_BORROWED_BY_READER;
@@ -58,7 +58,7 @@ class BorrowManager {
     }
 
     private boolean isAlreadyBorrowed(Book book, Reader reader) {
-        return borrowedBooksRegistry.readerHasNoBookCopy(book, reader);
+        return borrowedBooksRegistry.readerHasBookCopy(book, reader);
     }
 
 

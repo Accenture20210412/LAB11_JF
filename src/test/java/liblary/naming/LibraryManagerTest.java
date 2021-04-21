@@ -34,4 +34,18 @@ class LibraryManagerTest {
         List<Reader> readerList = libraryManager.loadReaders();
         assertEquals(List.of(reader), readerList);
     }
+
+    @Test
+    void shouldBorrowBook() {
+        Book book = new Book( ISBN.of("1234")
+                , "Juliusz Słowacki"
+                , "Balladyna");
+
+        Reader reader = new Reader("Jakub");
+        libraryManager.newReader(reader);
+
+        BorrowOutcome borrowOutcome = libraryManager.provideBook(book, reader);
+        assertEquals(BorrowOutcome.NOT_IN_CATALOGUE, borrowOutcome);
+    }
+
 }
