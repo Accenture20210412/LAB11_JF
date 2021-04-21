@@ -36,7 +36,7 @@ class LibraryManagerTest {
     }
 
     @Test
-    void shouldBorrowBook() {
+    void shouldNotBorrowBookNotInCatalogue() {
         Book book = new Book( ISBN.of("1234")
                 , "Juliusz Słowacki"
                 , "Balladyna");
