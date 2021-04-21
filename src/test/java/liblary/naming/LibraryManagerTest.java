@@ -1,7 +1,7 @@
 package liblary.naming;
 
 
-import org.junit.jupiter.api.Assumptions;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -153,5 +153,17 @@ class LibraryManagerTest {
 
         ReturnOutcome returnOutcome = libraryManager.returns(book, reader);
         assertEquals(ReturnOutcome.success, returnOutcome);
+    }
+
+    @Test
+    void shouldNotReturnBookReaderNotEnrolled() {
+        Book book = new Book( ISBN.of("1234")
+                , "Juliusz Słowacki"
+                , "Balladyna");
+        Reader reader = new Reader("Jakub");
+        libraryManager.putBook(book);
+
+        ReturnOutcome returnOutcome = libraryManager.returns(book, reader);
+        assertEquals(ReturnOutcome.readerNotEnrolled, returnOutcome);
     }
 }
