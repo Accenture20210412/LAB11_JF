@@ -118,12 +118,25 @@ class LibraryManagerTest {
         Reader reader = new Reader("Jakub");
         libraryManager.newReader(reader);
 
-        System.out.println(libraryManager.getBookAmounts(book));
         BorrowOutcome borrowOutcome = libraryManager.provideBook(book, reader);
-        System.out.println(libraryManager.getBookAmounts(book));
-
         assertTrue(() ->
                 libraryManager.getBookAmounts(book) == 3 &&
                 borrowOutcome == BorrowOutcome.SUCCESS);
+    }
+
+    @Test
+    void shouldNotBorrowBookAlreadyBorrowedByReader() {
+        Book book = new Book( ISBN.of("1234")
+                , "Juliusz Słowacki"
+                , "Balladyna");
+        libraryManager.putBook(book);
+
+        Reader reader = new Reader("Jakub");
+        libraryManager.newReader(reader);
+
+
+        libraryManager.provideBook(book, reader);
+        BorrowOutcome borrowOutcome = libraryManager.provideBook(book, reader);
+        assertEquals(BorrowOutcome.BOOK_ALREADY_BORROWED_BY_READER, borrowOutcome);
     }
 }
