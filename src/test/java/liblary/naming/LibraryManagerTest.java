@@ -92,4 +92,16 @@ class LibraryManagerTest {
         assertEquals(BorrowOutcome.NO_AVAILABLE_COPIES, borrowOutcome);
     }
 
+    @Test
+    void shouldValidAmountOfBooks() {
+        Book book = new Book( ISBN.of("1234")
+                , "Juliusz Słowacki"
+                , "Balladyna");
+        libraryManager.putBook(book);
+        libraryManager.putBook(book);
+        libraryManager.putBook(book);
+        libraryManager.putBook(book);
+
+        assertEquals(4, libraryManager.getBookAmounts(book));
+    }
 }
