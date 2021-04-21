@@ -73,4 +73,23 @@ class LibraryManagerTest {
         BorrowOutcome borrowOutcome = libraryManager.provideBook(book, reader);
         assertEquals(BorrowOutcome.SUCCESS, borrowOutcome);
     }
+
+    @Test
+    void shouldNotBorrowBookNoAvailableCopies() {
+        Book book = new Book( ISBN.of("1234")
+                , "Juliusz Słowacki"
+                , "Balladyna");
+        libraryManager.putBook(book);
+
+        Reader reader = new Reader("Jakub");
+        libraryManager.newReader(reader);
+
+        Reader reader2 = new Reader("Kamil");
+        libraryManager.newReader(reader2);
+
+        libraryManager.provideBook(book, reader2);
+        BorrowOutcome borrowOutcome = libraryManager.provideBook(book, reader);
+        assertEquals(BorrowOutcome.NO_AVAILABLE_COPIES, borrowOutcome);
+    }
+
 }
